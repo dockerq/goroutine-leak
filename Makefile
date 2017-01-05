@@ -7,5 +7,5 @@ dev-build: dev-compile
 dev-push: dev-build
 	docker push dockerq/goleak:dev
 dev-run:
-	docker run -d --name goleak --net host -v /var/run/docker.sock:/var/run/docker.sock -v /proc:/linker/proc dockerq/goleak:dev \
-        /goleak -i 2000
+	docker run --rm -d --name goleak --net host -v /var/run/docker.sock:/var/run/docker.sock \
+		-m 32M  dockerq/goleak:dev /goleak -i 2000
