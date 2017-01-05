@@ -60,10 +60,7 @@ type ContainerLogsInfo struct {
 	LogList   []ContainerLogs `json:"log_list"`
 }
 
-func GetContainers() ([]types.Container, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
-	defer cancel()
-
+func GetContainers(ctx context.Context) ([]types.Container, error) {
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		return nil, err
@@ -72,10 +69,7 @@ func GetContainers() ([]types.Container, error) {
 	return containers, err
 }
 
-func GetContainerLogByID(ID string, opts types.ContainerLogsOptions) string {
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
-	defer cancel()
-
+func GetContainerLogByID(ctx context.Context, ID string, opts types.ContainerLogsOptions) string {
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		log.Fatal(err)
@@ -92,7 +86,10 @@ func GetContainerLogByID(ID string, opts types.ContainerLogsOptions) string {
 }
 
 func GetContainerLogsInfo(interval int64) string {
-	containers, err := GetContainers()
+	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	defer cancel()
+
+	containers, err := GetContainers(ctx)
 	if err != nil {
 		log.Fatal("Get containers error:", err)
 		return ""
@@ -113,9 +110,11 @@ func GetContainerLogsInfo(interval int64) string {
 		containerLogs.ID = container.ID
 		containerLogs.Names = container.Names
 		containerLogs.Image = container.Image
-		containerLogs.Log = GetContainerLogByID(container.ID, opts)
+		containerLogs.Log = GetContainerLogByID(ctx, container.ID, opts)
 		containerLogsInfo.LogList = append(containerLogsInfo.LogList, containerLogs)
 	}
+
+	fmt.Println("get containers done! num of containers is:", len(containers))
 
 	retJson, err := json.Marshal(containerLogsInfo)
 	if err != nil {
@@ -148,7 +147,9 @@ func timestampSubInterval(interval int64) string {
 }
 
 func debugHttp() {
-    go func() {
+    fmt.Println("start pprof")
+	go func() {
         log.Println(http.ListenAndServe("0.0.0.0:34888", nil))
-    }() 
+    }()
+	fmt.Println("started pprof")
 }
