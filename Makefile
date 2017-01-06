@@ -9,3 +9,6 @@ dev-push: dev-build
 dev-run: dev-build
 	docker run -d --name goleak --net host -v /var/run/docker.sock:/var/run/docker.sock \
 		--privileged -m 32M  dockerq/goleak:dev /goleak -i 2000
+clean:
+	docker stop goleak
+	docker rm goleak
