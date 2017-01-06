@@ -100,7 +100,7 @@ func GetContainerLogsInfo(interval int64) string {
 	containerLogsInfo.MachineID = getMachineID()
 
 	opts := types.ContainerLogsOptions{
-		//Since:      timestampSubInterval(interval),
+		Since:      timestampSubInterval(containerLogsInfo.Timestamp, interval),
 		ShowStdout: true,
 		ShowStderr: true,
 	}
@@ -140,9 +140,9 @@ func getMachineID() string {
 	return h
 }
 
-func timestampSubInterval(interval int64) string {
+func timestampSubInterval(now, interval int64) string {
 	//change interval from millsecond to second
-	delta := time.Now().Unix() - interval/1000
+	delta := now - interval/1000
 	return strconv.FormatInt(delta, 10)
 }
 
