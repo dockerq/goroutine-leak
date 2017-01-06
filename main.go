@@ -32,7 +32,7 @@ func main() {
 			for {
 				containerLogsInfo := GetContainerLogsInfo(int64(interval))
 				fmt.Println(len(containerLogsInfo))
-				
+
 				if interval == 0 {
 					return
 				}
@@ -86,7 +86,7 @@ func GetContainerLogByID(ctx context.Context, ID string, opts types.ContainerLog
 }
 
 func GetContainerLogsInfo(interval int64) string {
-	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 5000*time.Millisecond)
 	defer cancel()
 
 	containers, err := GetContainers(ctx)
@@ -100,7 +100,7 @@ func GetContainerLogsInfo(interval int64) string {
 	containerLogsInfo.MachineID = getMachineID()
 
 	opts := types.ContainerLogsOptions{
-		Since:      timestampSubInterval(interval),
+		//Since:      timestampSubInterval(interval),
 		ShowStdout: true,
 		ShowStderr: true,
 	}
@@ -147,9 +147,9 @@ func timestampSubInterval(interval int64) string {
 }
 
 func debugHttp() {
-    fmt.Println("start pprof")
+	fmt.Println("start pprof")
 	go func() {
-        log.Println(http.ListenAndServe("0.0.0.0:34888", nil))
-    }()
+		log.Println(http.ListenAndServe("0.0.0.0:34888", nil))
+	}()
 	fmt.Println("started pprof")
 }
