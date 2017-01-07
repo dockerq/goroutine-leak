@@ -60,21 +60,12 @@ type ContainerLogsInfo struct {
 	LogList   []ContainerLogs `json:"log_list"`
 }
 
-func GetContainers(ctx context.Context) ([]types.Container, error) {
-	cli, err := client.NewEnvClient()
-	if err != nil {
-		return nil, err
-	}
+func GetContainers(cli *client.Client, ctx context.Context) ([]types.Container, error) {
 	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
 	return containers, err
 }
 
-func GetContainerLogByID(ctx context.Context, ID string, opts types.ContainerLogsOptions) string {
-	cli, err := client.NewEnvClient()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func GetContainerLogByID(cli *client.Client, ctx context.Context, ID string, opts types.ContainerLogsOptions) string {
 	reader, err := cli.ContainerLogs(ctx, ID, opts)
 	if err != nil {
 		log.Fatal(err)
@@ -82,14 +73,20 @@ func GetContainerLogByID(ctx context.Context, ID string, opts types.ContainerLog
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(reader)
+	reader.Close()
 	return buf.String()
 }
 
 func GetContainerLogsInfo(interval int64) string {
 	ctx, cancel := context.WithTimeout(context.Background(), 5000*time.Millisecond)
 	defer cancel()
-
-	containers, err := GetContainers(ctx)
+	
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	containers, err := GetContainers(cli, ctx)
 	if err != nil {
 		log.Fatal("Get containers error:", err)
 		return ""
@@ -110,7 +107,7 @@ func GetContainerLogsInfo(interval int64) string {
 		containerLogs.ID = container.ID
 		containerLogs.Names = container.Names
 		containerLogs.Image = container.Image
-		containerLogs.Log = GetContainerLogByID(ctx, container.ID, opts)
+		containerLogs.Log = GetContainerLogByID(cli, ctx, container.ID, opts)
 		containerLogsInfo.LogList = append(containerLogsInfo.LogList, containerLogs)
 	}
 
