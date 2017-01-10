@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	client "github.com/docker/engine-api/client"
-	"github.com/docker/engine-api/types"
-	"log"
+	"github.com/docker/docker/client"
+    "github.com/docker/docker/api/types"
+    "log"
 	"os"
 	"runtime"
 	"strconv"
@@ -102,8 +102,8 @@ func GetContainerLogsInfo(interval int64) string {
 		ShowStderr: true,
 	}
 
+    var containerLogs ContainerLogs
 	for _, container := range containers {
-		var containerLogs ContainerLogs
 		containerLogs.ID = container.ID
 		containerLogs.Names = container.Names
 		containerLogs.Image = container.Image
