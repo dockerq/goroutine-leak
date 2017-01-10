@@ -3,6 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "-v",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "L9njXCkN30+qHaLayiiA2Q9jDlY=",
 			"path": "github.com/Microsoft/go-winio",
 			"revision": "24a3e3d3fc7451805e09d11e11e95d9a0a4f205e",
@@ -27,36 +31,8 @@
 			"revisionTime": "2017-01-03T20:50:18Z"
 		},
 		{
-			"checksumSHA1": "IyBDGu6XZVjiyzl94LEpKuX8QX0=",
-			"path": "github.com/docker/engine-api/client",
-			"revision": "3d1601b9d2436a70b0dfc045a23f6503d19195df",
-			"revisionTime": "2016-07-27T18:58:13Z",
-			"version": "=release/1.12",
-			"versionExact": "release/1.12"
-		},
-		{
-			"checksumSHA1": "RcYDLK+XW1lSLDMSsLVQwepjV3Y=",
-			"path": "github.com/docker/engine-api/client/transport",
-			"revision": "3d1601b9d2436a70b0dfc045a23f6503d19195df",
-			"revisionTime": "2016-07-27T18:58:13Z",
-			"version": "=release/1.12",
-			"versionExact": "release/1.12"
-		},
-		{
-			"checksumSHA1": "dxUuki/mVVBKqsZ1n3RkBt+/cQM=",
-			"path": "github.com/docker/engine-api/client/transport/cancellable",
-			"revision": "3d1601b9d2436a70b0dfc045a23f6503d19195df",
-			"revisionTime": "2016-07-27T18:58:13Z",
-			"version": "=release/1.12",
-			"versionExact": "release/1.12"
-		},
-		{
-			"checksumSHA1": "qoIxfWnOQrrBPU7Zq/YFnb0lPmE=",
-			"path": "github.com/docker/engine-api/types",
-			"revision": "3d1601b9d2436a70b0dfc045a23f6503d19195df",
-			"revisionTime": "2016-07-27T18:58:13Z",
-			"version": "=release/1.12",
-			"versionExact": "release/1.12"
+			"path": "github.com/docker/docker/client",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "ry5lgawDzJEEFNOgiLkAj7yJH6E=",
