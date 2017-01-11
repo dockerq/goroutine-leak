@@ -23,3 +23,8 @@ Further details of pprof just clicking [golang pprof](https://golang.org/pkg/net
 
 ## Reference
 - [Goroutine leak](https://medium.com/golangspec/goroutine-leak-400063aef468)
+- [sof:why-goroutine-leaks](http://stackoverflow.com/questions/29892950/why-goroutine-leaks)
+- [Golang channels 教程](https://www.oschina.net/translate/golang-channels-tutorial)
+- [goroutine背后的系统知识](http://www.infoq.com/cn/articles/knowledge-behind-goroutine)
+- [知乎：golang的goroutine是如何实现的？](https://www.zhihu.com/question/20862617)
+- [goroutine背后的系统知识](http://www.sizeofvoid.net/goroutine-under-the-hood/)
